@@ -21,10 +21,11 @@ public class User {
 	private Integer userId;
 	private String userFirstName;
 	private String userLastName;
+	private String userDesignation;
 	private String userUsername; // auto generated
 	private String userPassword; // auto generated
 	private String userEmail;
 	@OneToOne(cascade = CascadeType.ALL)
-	private UserDocuments userDocs;
+	private UserDocuments userDocs=new UserDocuments();
 	
 }

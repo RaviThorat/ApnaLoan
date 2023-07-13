@@ -52,8 +52,8 @@ public class Customer {
 	private LoanDisbursement loandisbursement;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Ledger ledger;
-	@OneToOne(cascade = CascadeType.ALL)
-	private SanctionLetter sanctionletter;
+//	@OneToOne(cascade = CascadeType.ALL)
+//	private SanctionLetter sanctionletter;
 	@OneToOne(cascade = CascadeType.ALL)
 	private CustomerVerification customerverification;
 
