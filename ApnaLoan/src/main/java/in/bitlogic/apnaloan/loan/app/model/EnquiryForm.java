@@ -16,12 +16,14 @@ import lombok.NoArgsConstructor;
 public class EnquiryForm {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer cID;
+	private Integer eID;
 	private String firstName;
 	private String lastName;
 	private Integer age;
 	private String email;
-	private Double mobileNo;
+	private long mobileNo;
+	private String panCardNo;
+	private Integer cibilScore;
 	private String status;
 	// add enquiry status and cibil score
 

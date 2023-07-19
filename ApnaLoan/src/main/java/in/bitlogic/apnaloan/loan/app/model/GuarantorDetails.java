@@ -17,10 +17,17 @@ public class GuarantorDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer guarantorId;
-	private String guarantorName;
-	private String guarantorDateOfBirth;
-	private String guarantorMobileNumber;
+	private String guarantorFirstName;
+	private String guarantorMiddleName;
+	private String guarantorLastName;
+	private Long guarantorMobileNumber;
 	private Long guarantorAdharCardNo;
-	private String guarantorPermanentAddress;
+	private String areaname;
+	private String cityname;
+	private String district;
+	private String state;
+	private Long pincode;
+	private Integer houseNumber;
+	private String landmark;
 
 }

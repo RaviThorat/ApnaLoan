@@ -18,7 +18,5 @@ public class Cibil {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer cibilId;
 	private Integer cibilScore;
-	private String status;
-	private String remark;
 
 }

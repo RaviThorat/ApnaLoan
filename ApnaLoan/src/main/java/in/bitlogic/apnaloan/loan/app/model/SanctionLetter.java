@@ -1,9 +1,14 @@
 package in.bitlogic.apnaloan.loan.app.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,18 +23,16 @@ public class SanctionLetter {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer sanctionId;
-	private String sanctionDate;
+	@CreationTimestamp
+	private Date sanctionDate;
 	private String applicantName;	
-	private Double contactDetails;	
-		
+	private Long mobileNo;
+	private String email;
 	private Double loanAmtSanctioned;
-	private String interestType;
 	private Integer rateOfInterest;	
 	private Integer loanTenure;	
 	private Double monthlyEmiAmount;
-	private String modeOfPayment;	
-	private String remarks;	
-	private String termsCondition;	
-	private String status;	
-
+	private String modeOfPayment;
+	@Lob
+	private byte[] sanctionLetterPdf;
 }

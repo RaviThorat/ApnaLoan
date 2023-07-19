@@ -19,19 +19,21 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer customerId;
-	private String customerName;
+	private String customerFirstName;
+	private String customerMiddleName;
+	private String customerLastName;
 	private String customerDateOfBirth;
 	private Integer customerAge;
 	private String customerGender;
 	private String customerEmail;
-	private Double customerMobileNumber;	
-	private Double customerAdditionalMobileNumber;
+	private Long customerMobileNumber;	
+	private Long customerAdditionalMobileNumber;
 	private Double customerTotalLoanRequired;
-	
+	private String customerStatus;
 	@OneToOne(cascade = CascadeType.ALL)
 	private EducationalInformation educationalInfo;
 	@OneToOne(cascade = CascadeType.ALL)
-	private AllPersonalDocuments allpersonalDoc;
+	private AllPersonalDocuments allpersonalDoc=new AllPersonalDocuments();
 	@OneToOne(cascade = CascadeType.ALL)
 	private FamilyDependentInforamtion familydependentInfo;
 	@OneToOne(cascade = CascadeType.ALL)
@@ -41,7 +43,7 @@ public class Customer {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Profession profession;
 	@OneToOne(cascade = CascadeType.ALL)
-	private Cibil cibilscore;
+	private Cibil cbscore;
 	@OneToOne(cascade = CascadeType.ALL)
 	private AccountDetails accountdetails;
 	@OneToOne(cascade = CascadeType.ALL)
@@ -49,12 +51,11 @@ public class Customer {
 	@OneToOne(cascade = CascadeType.ALL)
 	private GuarantorDetails gurantordetails;
 	@OneToOne(cascade = CascadeType.ALL)
+	private CustomerVerification customerverification;
+	@OneToOne(cascade = CascadeType.ALL)
+	private SanctionLetter sanctionletter;
+	@OneToOne(cascade = CascadeType.ALL)
 	private LoanDisbursement loandisbursement;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Ledger ledger;
-//	@OneToOne(cascade = CascadeType.ALL)
-//	private SanctionLetter sanctionletter;
-	@OneToOne(cascade = CascadeType.ALL)
-	private CustomerVerification customerverification;
-
 }

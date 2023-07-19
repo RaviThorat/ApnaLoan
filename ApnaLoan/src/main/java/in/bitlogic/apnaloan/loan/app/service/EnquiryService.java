@@ -6,10 +6,14 @@ import in.bitlogic.apnaloan.loan.app.model.EnquiryForm;
 
 public interface EnquiryService {
 
-	public void addEnquiry(EnquiryForm e);
+	public EnquiryForm addEnquiry(EnquiryForm e);
 
 	public List<EnquiryForm> getEnquiries();
 
 	public List<EnquiryForm> getNewEnquiries(String status);
+
+	public EnquiryForm requestCibil(int eid);
+
+	public EnquiryForm cibilScoreUpdate(EnquiryForm e,int eid);
 
 }

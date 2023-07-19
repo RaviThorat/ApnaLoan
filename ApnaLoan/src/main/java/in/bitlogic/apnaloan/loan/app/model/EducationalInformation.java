@@ -18,5 +18,4 @@ public class EducationalInformation {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer educationId;
 	private String educationType;
-
 }
