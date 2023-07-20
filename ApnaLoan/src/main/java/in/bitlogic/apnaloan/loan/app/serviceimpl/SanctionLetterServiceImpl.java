@@ -282,6 +282,9 @@ public class SanctionLetterServiceImpl implements SanctionLetterService {
 				
 		
 		document.close();
+		
+		customer.getSanctionletter().setSanctionLetterPdf(out.toByteArray());
+		cr.save(customer);
 
 		return new ByteArrayInputStream(out.toByteArray());
 	}
