@@ -1,3 +1,4 @@
+
 package in.bitlogic.apnaloan.loan.app.controller;
 
 import java.io.ByteArrayInputStream;
@@ -27,20 +28,20 @@ public class SanctionLetterController {
 	@Autowired
 	SanctionLetterService sls;
 
-	// Get API Show File_Pending status wise customers for CM =>
+	// Get API Show File_Pending status wise customers for =>
 	// http://localhost:9090/getVerifiedCustomers/{status} or File_Pending
 	@GetMapping("/getVerifiedCustomers/{status}")
 	public ResponseEntity<List<Customer>> getVerifiedCustomers(@PathVariable String status) {
 		return new ResponseEntity<List<Customer>>(sls.getVerifiedCustomers(status), HttpStatus.OK);
 	}
 
-	// Put API fill sanction details for CM => http://localhost:9090/addSanctionData/{cid}
+	// Put API fill sanction details => http://localhost:9090/addSanctionData/{cid}
 	@PutMapping("/addSanctionData/{cid}")
 	public ResponseEntity<Customer> addSanctionData(@RequestBody SanctionLetter san, @PathVariable int cid) {
 		return new ResponseEntity<Customer>(sls.addSanctionData(san, cid), HttpStatus.CREATED);
 	}
 
-	// Get API fill in sanction Letter for CM => http://localhost:9090/getSanctionLetterPdf/{cid}
+	// Get API fill in sanction Letter => http://localhost:9090/getSanctionLetterPdf/{cid}
 	@GetMapping("/getSanctionLetterPdf/{cid}")
 	public ResponseEntity<InputStreamResource> getSanctionLetterPdf(@PathVariable int cid) {
 		
@@ -53,8 +54,4 @@ public class SanctionLetterController {
 				.contentType(MediaType.APPLICATION_PDF)
 				.body(new InputStreamResource(pdfArray));
 	}
-	
-	//Get API View PDF for CM=> http://localhost:9090/viewPdf/{cid}
-	
-	
 }

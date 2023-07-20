@@ -1,9 +1,28 @@
 package in.bitlogic.apnaloan.loan.app.serviceimpl;
 
+import java.awt.Color;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
+
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.lowagie.text.Document;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 
 import in.bitlogic.apnaloan.loan.app.model.Customer;
 import in.bitlogic.apnaloan.loan.app.model.LoanDisbursement;
@@ -24,7 +43,7 @@ public class LoanDisbursementServiceImpl implements LoanDisbursementService{
 				Customer c=op.get();
 				
 				ld.setLoanNo(ld.getAgreementId());
-				ld.setModeOfPayment(c.getSanctionletter().getModeOfPayment());
+				//ld.setModeOfPayment(c.getSanctionletter().getModeOfPayment()); // need to give input by postman
 				ld.setBankName(c.getAccountdetails().getBankName());
 				ld.setBankBranchName(c.getAccountdetails().getBankBranchName());
 				ld.setAccountHolderFirstName(c.getSanctionletter().getApplicantFirstName());
@@ -36,8 +55,208 @@ public class LoanDisbursementServiceImpl implements LoanDisbursementService{
 				ld.setTransferAmount(c.getSanctionletter().getLoanAmtSanctioned());
 				
 				c.setLoandisbursement(ld);
+				
+				cr.save(c);
+				
+				c.getLoandisbursement().setLoanNo(c.getLoandisbursement().getAgreementId());
 		
 		return cr.save(c);
+	}
+
+	@Override
+	public ByteArrayInputStream createLoanDisbursePdf(int cid) {
+		Optional<Customer> opsan1 = cr.findById(cid);
+
+		Customer customer = opsan1.get();
+
+		String title = "Loan Disbursement";
+		Date date = new Date();
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+		String formatedDate = dateFormat.format(date);
+
+		String to = "Date: " + formatedDate + "\n " + "To: "+customer.getCustomerFirstName()+" "+customer.getCustomerMiddleName()+" "+customer.getCustomerLastName();
+
+		String sub = "Subject: About loan disbursement";
+		
+		String dear = "Dear "+customer.getSanctionletter().getApplicantFirstName();
+		
+		String body = "Congratulations! Apna Loan Bank is Happy to informed you that your loan has been disbursed.";
+		
+		String tableTitle="Loan Disbursement Details";
+		
+		String termsnconditionTitle = "Additional condition to comply prior to disbursal:";
+		
+		String termsncondition =
+				"1.Repayment from Apna Loan bank. \n "
+				+ "2.Confirmation form Official ID and Copy of ID required. \n "
+				+ "3.The Borrower will be required to reply within 21 days from date of issue of said Notice. \n "
+				+ "4. Legal vetting & Search to be done.\n"
+				+ "5. NOC from tenant at offered collateral.\n"
+				+ "6. Positive Residential & Office CPV Initiated.\n";
+
+		String thanksText = "Thank you,\n Regards Apna Loan!";
+
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+		Document document = new Document();
+
+		PdfWriter.getInstance(document, out);
+		document.open();
+
+		// -------Title---------------
+
+		Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 25);
+		//titleFont.setColor(CMYKColor.red);
+		Paragraph titlePara = new Paragraph(title, titleFont);
+		titlePara.setAlignment(Element.ALIGN_CENTER);
+		document.add(titlePara);
+
+		// -----------To---------------
+		Font toFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+		Paragraph toPara = new Paragraph(to, toFont);
+		toPara.setSpacingBefore(20);
+		document.add(toPara);
+		
+		// ----------Subject-----------
+		Font subFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+		Paragraph subPara = new Paragraph(sub, subFont);
+		subPara.setSpacingBefore(15);
+		subPara.setAlignment(Element.ALIGN_CENTER);
+		document.add(subPara);
+		
+		// ----------dear-----------
+		Font dearFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+		Paragraph dearPara = new Paragraph(dear, dearFont);
+		dearPara.setSpacingBefore(15);
+		document.add(dearPara);
+		
+		// ----------body-----------
+		Font bodyFont = FontFactory.getFont(FontFactory.HELVETICA);
+		Paragraph bodyPara = new Paragraph(body, bodyFont);
+		bodyPara.setAlignment(Element.ALIGN_JUSTIFIED_ALL);
+		document.add(bodyPara);
+		
+		// ----------body-----------
+		Font tableTitleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD,15);
+		Paragraph tableTitlePara = new Paragraph(tableTitle, tableTitleFont);
+		tableTitlePara.setSpacingBefore(15);
+		tableTitlePara.setAlignment(Element.ALIGN_CENTER);
+		document.add(tableTitlePara);
+
+
+		// ------------1.Table For Loan Disbursement Details---------------
+
+		PdfPTable table = new PdfPTable(2);
+		table.setWidths(new int[] {5,5});
+		table.setWidthPercentage(100F);
+		table.setSpacingBefore(15);
+
+		// -------------Cell--------
+		PdfPCell headCell = new PdfPCell();
+		headCell.setPadding(5);
+		headCell.setPaddingLeft(10);
+		Font headCellFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+		Font headCellFont2 = FontFactory.getFont(FontFactory.HELVETICA);
+
+		// -------Adding Phrase--
+		headCell.setPhrase(new Phrase("Loan No", headCellFont));
+		table.addCell(headCell);
+		headCell.setPhrase(new Phrase(String.valueOf(customer.getLoandisbursement().getLoanNo()),headCellFont2));
+		table.addCell(headCell);
+
+		headCell.setPhrase(new Phrase("Account Holder's First Name", headCellFont));
+		table.addCell(headCell);
+		headCell.setPhrase(new Phrase(customer.getLoandisbursement().getAccountHolderFirstName(),headCellFont2));
+		table.addCell(headCell);
+		
+		headCell.setPhrase(new Phrase("Account Holder's Middle Name", headCellFont));
+		table.addCell(headCell);
+		headCell.setPhrase(new Phrase(customer.getLoandisbursement().getAccountHolderMiddleName(),headCellFont2));
+		table.addCell(headCell);
+
+		headCell.setPhrase(new Phrase("Account Holder's Last Name", headCellFont));
+		table.addCell(headCell);
+		headCell.setPhrase(new Phrase(customer.getLoandisbursement().getAccountHolderLastName(),headCellFont2));
+		table.addCell(headCell);
+		
+		headCell.setPhrase(new Phrase("Agreement Date", headCellFont));
+		table.addCell(headCell);
+		DateFormat dateFormat2 = new SimpleDateFormat("dd-MM-yyyy");
+			String sanDate=dateFormat2.format(customer.getLoandisbursement().getAgreementDate());
+		headCell.setPhrase(new Phrase(sanDate,headCellFont2));
+		table.addCell(headCell);
+
+		headCell.setPhrase(new Phrase("Bank Name", headCellFont));
+		table.addCell(headCell);
+		headCell.setPhrase(new Phrase(customer.getLoandisbursement().getBankName(),headCellFont2));
+		table.addCell(headCell);
+
+		headCell.setPhrase(new Phrase("Bank Branch Name", headCellFont));
+		table.addCell(headCell);
+		headCell.setPhrase(new Phrase(customer.getLoandisbursement().getBankBranchName(),headCellFont2));
+		table.addCell(headCell);
+
+		headCell.setPhrase(new Phrase("Account Number", headCellFont));
+		table.addCell(headCell);
+		headCell.setPhrase(new Phrase(String.valueOf(customer.getLoandisbursement().getAccountNumber()),headCellFont2));
+		table.addCell(headCell);
+
+		headCell.setPhrase(new Phrase("IFSC Code", headCellFont));
+		table.addCell(headCell);
+		headCell.setPhrase(new Phrase(customer.getLoandisbursement().getIfscCode(),headCellFont2));
+		table.addCell(headCell);
+
+		headCell.setPhrase(new Phrase("Account Type", headCellFont));
+		table.addCell(headCell);
+		headCell.setPhrase(new Phrase(customer.getLoandisbursement().getAccountType(),headCellFont2));
+		table.addCell(headCell);
+
+		headCell.setPhrase(new Phrase("Transfered Amount", headCellFont));
+		table.addCell(headCell);
+		headCell.setPhrase(new Phrase(String.valueOf(customer.getLoandisbursement().getTransferAmount()),headCellFont2));
+		table.addCell(headCell);
+
+		headCell.setPhrase(new Phrase("Amount Paid Date", headCellFont));
+		table.addCell(headCell);
+		DateFormat dateFormat3 = new SimpleDateFormat("dd-MM-yyyy");
+			String sanDate2=dateFormat3.format(customer.getLoandisbursement().getAmountPaidDate());
+		headCell.setPhrase(new Phrase(sanDate2,headCellFont2));
+		table.addCell(headCell);
+
+		document.add(table);
+
+		// -----------terms and condition Title----------
+		Font termsnconditionTitleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+		Paragraph termsnconditionTitlePara = new Paragraph(termsnconditionTitle, termsnconditionTitleFont);
+		termsnconditionTitlePara.setSpacingBefore(20);
+		document.add(termsnconditionTitlePara);
+				
+		// -----------terms and conditions Points----------
+		Font termsnconditionFont = FontFactory.getFont(FontFactory.HELVETICA);
+		Paragraph termsnconditionPara = new Paragraph(termsncondition, termsnconditionFont);
+		document.add(termsnconditionPara);
+		
+		// -----------Thanks And Regards----------
+		Font thanksFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+		Paragraph thanksPara = new Paragraph(thanksText, thanksFont);
+		thanksPara.setSpacingBefore(15);
+		thanksPara.setAlignment(Element.ALIGN_RIGHT);
+		document.add(thanksPara);
+
+		document.setMarginMirroringTopBottom(true);
+		
+		JPanel pane =new JPanel();
+		pane.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
+		
+		
+		document.close();
+		
+		customer.getLoandisbursement().setLoanDisbursePdf(out.toByteArray());
+		cr.save(customer);
+
+		return new ByteArrayInputStream(out.toByteArray());
 	}
 
 }

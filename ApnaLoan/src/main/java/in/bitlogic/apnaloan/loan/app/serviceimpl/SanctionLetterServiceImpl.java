@@ -41,7 +41,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterService {
 	@Override
 	public List<Customer> getVerifiedCustomers(String status) {
 
-		return cr.findAll();
+		return cr.findAllByCustomerStatus(status);
 	}
 
 	@Override
@@ -81,9 +81,6 @@ public class SanctionLetterServiceImpl implements SanctionLetterService {
 	@Override
 	public ByteArrayInputStream getSanctionLetterPdf(int cid) 
 	{
-
-		// private Logger logger =
-		// LoggerFactory.getLogger(SanctionLetterServiceImpl.class);
 
 		Optional<Customer> opsan1 = cr.findById(cid);
 
