@@ -34,5 +34,6 @@ class LoanDisbursement {
 	private String ifscCode;
 	private String accountType;
 	private Double transferAmount;
+	@CreationTimestamp
 	private Date amountPaidDate;
 }

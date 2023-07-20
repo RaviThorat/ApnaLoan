@@ -18,19 +18,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-
 public class SanctionLetter {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer sanctionId;
 	@CreationTimestamp
 	private Date sanctionDate;
-	private String applicantName;	
+	private String applicantFirstName;
+	private String applicantMiddleName;
+	private String applicantLastName;
 	private Long mobileNo;
 	private String email;
 	private Double loanAmtSanctioned;
-	private Integer rateOfInterest;	
-	private Integer loanTenure;	
+	private Float rateOfInterest;
+	private Integer loanTenureInYears;
+	private Double totalAmountWithInterest;
+	private Double totalInterest;
 	private Double monthlyEmiAmount;
 	private String modeOfPayment;
 	@Lob

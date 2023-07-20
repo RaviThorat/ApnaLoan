@@ -25,16 +25,19 @@ public class Ledger {
 	private Date ledgerCreatedDate;
 	private Double totalLoanAmount;
 	private Double payableAmountwithInterest;
-	private Integer tenure;
+	private Integer loanTenureInYears;
 	private Double monthlyEMI;	
-	private Double amountPaidtillDate;
-	private Double remainingAmount;	
-	private Date nextEmiDatestart;	
-	@CreationTimestamp
-	private Date nextEmiDateEnd;	
+	private Double amountPaidTillDate;
+	private Double remainingAmount;
+	private String nextEmiDateStart;	
+	private String nextEmiDateEnd;	
 	private Integer defaulterCount; // no of emi bounce
+	@CreationTimestamp
+	private Date currentEmiPaidDate;
+	private String currentEmiPaidMode;
 	private String previousEmiStatus; // paid unpaid
 	private String currentMonthEmiStatus;
-	@CreationTimestamp
-	private Date loanEndDate;
+	private String loanEmiStartDate;
+	private String loanEmiEndDate;
+	private Integer noOfEmisPaid;
 }
