@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import in.bitlogic.apnaloan.loan.app.enums.EnquiryStatus;
 import in.bitlogic.apnaloan.loan.app.model.EnquiryForm;
 import in.bitlogic.apnaloan.loan.app.service.EnquiryService;
 
+@CrossOrigin("*")
 @RestController
 public class EnquiryController {
 	
@@ -34,22 +37,22 @@ public class EnquiryController {
 		return new ResponseEntity<List<EnquiryForm>>(es.getEnquiries(),HttpStatus.OK);
 	}
 	
-	//Get API for RE and OE => http://localhost:9090/getNewEnquiry/{status}
-	@GetMapping("/getNewEnquiries/{status}")
-	public ResponseEntity<List<EnquiryForm>> getNewEnquiries(@PathVariable String status) {
-		return new ResponseEntity<List<EnquiryForm>>(es.getNewEnquiries(status),HttpStatus.OK);
+	//Get API for OE => http://localhost:9090/getCibilReqEnquiries
+	@GetMapping("/getCibilReqEnquiries")
+	public ResponseEntity<List<EnquiryForm>> getNewEnquiries() {
+		return new ResponseEntity<List<EnquiryForm>>(es.getNewEnquiries(String.valueOf(EnquiryStatus.Cibil_REQUIRED)),HttpStatus.OK);
 	}
 	
-	//Put API Request Cibil for RE => http://localhost:9090/requestCibil/{eid}
-	@PutMapping("/requestCibil/{eid}")
+	//Get API Request Cibil for RE => http://localhost:9090/requestCibil/{eid}
+	@GetMapping("/requestCibil/{eid}")
 	public ResponseEntity<EnquiryForm> requestCibil(@PathVariable int eid) {
 		return new ResponseEntity<EnquiryForm>(es.requestCibil(eid),HttpStatus.OK);
 	}
 	
-	//Put API Cibil Score update for OE => http://localhost:9090/cibilScoreUpdate/{eid}
-	@PutMapping("/cibilScoreUpdate/{eid}")
-	public ResponseEntity<EnquiryForm> cibilScoreUpdate(@RequestBody EnquiryForm e, @PathVariable int eid){
-		return new ResponseEntity<EnquiryForm>(es.cibilScoreUpdate(e,eid),HttpStatus.OK);
+	//Get API Cibil Score update for OE => http://localhost:9090/cibilScoreUpdate/{eid}
+	@GetMapping("/cibilScoreUpdate/{eid}")
+	public ResponseEntity<EnquiryForm> cibilScoreUpdate(@PathVariable int eid){
+		return new ResponseEntity<EnquiryForm>(es.cibilScoreUpdate(eid),HttpStatus.OK);
 	}
 	
 	
