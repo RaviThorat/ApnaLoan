@@ -39,8 +39,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 			byte[] pdf=la.getSanctionletter().getSanctionLetterPdf();
 			
 					InputStreamSource input=new ByteArrayResource(pdf);
-					
-				
+								
 				MimeMessage m = sender.createMimeMessage();
 				
 				try {

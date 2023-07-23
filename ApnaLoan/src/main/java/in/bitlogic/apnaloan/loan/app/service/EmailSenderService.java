@@ -9,7 +9,4 @@ public interface EmailSenderService {
 	public void sendEmailLoanDisbursement(String fEmail, int customerId);
 
 
-
-
-
 }
