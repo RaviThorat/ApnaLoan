@@ -21,7 +21,6 @@ import in.bitlogic.apnaloan.loan.app.service.EmailSenderService;
 @RestController
 public class EmailSenderController {
 
-	
 	@Autowired
 	EmailSenderService ess;
 	

@@ -20,6 +20,7 @@ import in.bitlogic.apnaloan.loan.app.service.EmailSenderService;
 @Service
 public class EmailSenderServiceImpl implements EmailSenderService {
 
+	
 	@Autowired
 	JavaMailSender sender;
 	
