@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import in.bitlogic.apnaloan.loan.app.enums.EnquiryStatus;
 import in.bitlogic.apnaloan.loan.app.model.EnquiryForm;
@@ -16,6 +17,9 @@ public class EnquiryServiceImpl implements EnquiryService{
 
 	@Autowired
 	EnquiryRepository er;	
+	
+	@Autowired
+	RestTemplate rst;
 	
 	@Override
 	public EnquiryForm addEnquiry(EnquiryForm e) {
@@ -46,32 +50,27 @@ public class EnquiryServiceImpl implements EnquiryService{
 	}
 
 	@Override
-	public EnquiryForm cibilScoreUpdate(EnquiryForm e, int eid) {
+	public EnquiryForm cibilScoreUpdate(int eid) {
 		
 				
 		Optional<EnquiryForm> op=er.findById(eid);
-				EnquiryForm eform=op.get();
+				EnquiryForm e=op.get();
 				
-				e.setEID(eid);
-				e.setFirstName(eform.getFirstName());
-				e.setLastName(eform.getLastName());
-				e.setAge(eform.getAge());
-				e.setEmail(eform.getEmail());
-				e.setMobileNo(eform.getMobileNo());				
-				e.setPanCardNo(eform.getPanCardNo());
-//				e.setCibilScore(eform.getCibilScore());
+				
+				int cibilScore=rst.getForObject("http://localhost:1010/cibilcalculator/getCibil/"+e.getPanCardNo(),Integer.class);
+				
+				e.setCibilScore(cibilScore);
 				
 				er.save(e);
 				
-//				eform.setCibilScore(785);
 				//Cibil Check Logic ---> Eligibility
-				if(eform.getCibilScore() >= 681) {
-					eform.setStatus(String.valueOf(EnquiryStatus.Cibil_OK));
+				if(e.getCibilScore() >= 681) {
+					e.setStatus(String.valueOf(EnquiryStatus.Cibil_OK));
 				} else {
-					eform.setStatus(String.valueOf(EnquiryStatus.Cibil_NOTOK));
+					e.setStatus(String.valueOf(EnquiryStatus.Cibil_NOTOK));
 				}
 			
-		return er.save(eform);
+		return er.save(e);
 	}
 
 }

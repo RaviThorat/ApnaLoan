@@ -14,6 +14,6 @@ public interface EnquiryService {
 
 	public EnquiryForm requestCibil(int eid);
 
-	public EnquiryForm cibilScoreUpdate(EnquiryForm e,int eid);
+	public EnquiryForm cibilScoreUpdate(int eid);
 
 }
