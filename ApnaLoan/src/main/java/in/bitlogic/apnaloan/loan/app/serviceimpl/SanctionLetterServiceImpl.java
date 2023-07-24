@@ -27,6 +27,7 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
+import in.bitlogic.apnaloan.loan.app.enums.EnquiryStatus;
 import in.bitlogic.apnaloan.loan.app.model.Customer;
 import in.bitlogic.apnaloan.loan.app.model.SanctionLetter;
 import in.bitlogic.apnaloan.loan.app.repository.CustomerRepository;
@@ -73,6 +74,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterService {
 		san.setTotalAmountWithInterest((double) Math.round(totalAmt));
 		san.setTotalInterest((double) Math.round(totalInt));
 
+		c.setCustomerStatus(String.valueOf(EnquiryStatus.File_SANCTIONED));
 		c.setSanctionletter(san);
 
 		return cr.save(c);

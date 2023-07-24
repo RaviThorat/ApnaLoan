@@ -24,6 +24,7 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
+import in.bitlogic.apnaloan.loan.app.enums.EnquiryStatus;
 import in.bitlogic.apnaloan.loan.app.model.Customer;
 import in.bitlogic.apnaloan.loan.app.model.LoanDisbursement;
 import in.bitlogic.apnaloan.loan.app.repository.CustomerRepository;
@@ -54,6 +55,7 @@ public class LoanDisbursementServiceImpl implements LoanDisbursementService{
 				ld.setAccountType(c.getAccountdetails().getAccounType());
 				ld.setTransferAmount(c.getSanctionletter().getLoanAmtSanctioned());
 				
+				c.setCustomerStatus(String.valueOf(EnquiryStatus.LOAN_DISBURSED));
 				c.setLoandisbursement(ld);
 				
 				cr.save(c);
