@@ -28,7 +28,7 @@ public class EmailSenderController {
 	String fEmail;
 	
 
-	//Post API => http://localhost:9090/emailsendsanctionletter/{customerId}
+	//Post API Sanction letter send for CM => http://localhost:9090/emailsendsanctionletter/{customerId}
 
     @GetMapping(value="/emailsendsanctionletter/{customerId}")
 	public String sendEmailWithAttachedment(@PathVariable("customerId") int customerId) 
@@ -46,7 +46,7 @@ public class EmailSenderController {
 	}	
     
     
-	//Post API => http://localhost:9090/emailsendsanctionletter/{customerId}
+	//Post API Loan Disbursement letter send for CM => http://localhost:9090/emailsendsanctionletter/{customerId}
 
     @GetMapping(value="/emailsendloandisbursement/{customerId}")
    	public String sendEmailLoanDisbursement(@PathVariable("customerId") int customerId) 
