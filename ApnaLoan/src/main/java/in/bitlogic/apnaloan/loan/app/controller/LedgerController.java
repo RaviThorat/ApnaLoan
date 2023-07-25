@@ -3,6 +3,7 @@ package in.bitlogic.apnaloan.loan.app.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,12 +48,12 @@ public ResponseEntity<Ledger> saveLedger(@RequestBody Ledger l)
 		}
 		
         @GetMapping("/generateLedger/{customerId}")
-        public ResponseEntity<List<Ledger>> genrateLedger(@PathVariable int customerId)
+        public Set<Ledger> genrateLedger(@PathVariable int customerId)
         {
-           List<Ledger> ledgers=	ls.createLedger(customerId);
+           Set<Ledger> ledgers=	ls.createLedger(customerId);
         	
         	
-        	return null;
+        	return ledgers;
         }
 		
 //		

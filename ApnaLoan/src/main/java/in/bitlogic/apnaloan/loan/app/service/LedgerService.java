@@ -1,6 +1,7 @@
 package in.bitlogic.apnaloan.loan.app.service;
 
 import java.util.List;
+import java.util.Set;
 
 import in.bitlogic.apnaloan.loan.app.model.Ledger;
 
@@ -10,7 +11,7 @@ Ledger addLedger(Ledger l);
 
 List<Ledger> getLedger();
 
-List<Ledger> createLedger(int customerId);
+Set<Ledger> createLedger(int customerId);
 
 
 }

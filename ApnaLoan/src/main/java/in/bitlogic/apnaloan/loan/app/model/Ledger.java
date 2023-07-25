@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,8 +20,8 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Ledger {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer ledgerId;
+	
+	private String ledgerId;
 	@CreationTimestamp
 	private Date ledgerCreatedDate;
 	private Double totalLoanAmount;
@@ -32,7 +33,7 @@ public class Ledger {
 	private String nextEmiDateStart;	
 	private String nextEmiDateEnd;	
 	private Integer defaulterCount; // no of emi bounce
-	@CreationTimestamp
+	@UpdateTimestamp
 	private Date currentEmiPaidDate;
 	private String currentEmiPaidMode;
 	private String previousEmiStatus; // paid unpaid

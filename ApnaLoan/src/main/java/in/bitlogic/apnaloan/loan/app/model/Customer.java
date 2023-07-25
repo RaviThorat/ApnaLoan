@@ -1,10 +1,13 @@
 package in.bitlogic.apnaloan.loan.app.model;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
@@ -56,6 +59,6 @@ public class Customer {
 	private SanctionLetter sanctionletter;
 	@OneToOne(cascade = CascadeType.ALL)
 	private LoanDisbursement loandisbursement;
-	@OneToOne(cascade = CascadeType.ALL)
-	private Ledger ledger;
+	@OneToMany(cascade = CascadeType.ALL)
+	private Set<Ledger> ledger;
 }

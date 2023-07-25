@@ -8,6 +8,5 @@ import in.bitlogic.apnaloan.loan.app.model.Ledger;
 
 public interface LedgerRepository extends JpaRepository<Ledger, Integer>
 {
-	public List<Ledger> findAllByStatus(String status);
-
+	
 }
