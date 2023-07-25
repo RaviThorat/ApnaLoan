@@ -40,4 +40,7 @@ public class Ledger {
 	private String loanEmiStartDate;
 	private String loanEmiEndDate;
 	private Integer noOfEmisPaid;
+	private Integer totalNoOfEmi;
+	private Integer remainingEmi;
+
 }
