@@ -1,5 +1,6 @@
 package in.bitlogic.apnaloan.loan.app.model;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -60,5 +61,5 @@ public class Customer {
 	@OneToOne(cascade = CascadeType.ALL)
 	private LoanDisbursement loandisbursement;
 	@OneToMany(cascade = CascadeType.ALL)
-	private Set<Ledger> ledger;
+	private List<Ledger> ledger;
 }

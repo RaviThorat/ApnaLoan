@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import ch.qos.logback.classic.pattern.RootCauseFirstThrowableProxyConverter;
+import in.bitlogic.apnaloan.loan.app.enums.EnquiryStatus;
 import in.bitlogic.apnaloan.loan.app.model.Customer;
 import in.bitlogic.apnaloan.loan.app.model.Ledger;
 import in.bitlogic.apnaloan.loan.app.model.SanctionLetter;
@@ -43,7 +44,7 @@ public class LedgerServiceImpl implements LedgerService
 	}
 
 	@Override
-	public Set<Ledger> createLedger(int customerId) {
+	public List<Ledger> createLedger(int customerId) {
              Optional<Customer> optionalCustomer = cr.findById(customerId);
              if(optionalCustomer.isPresent())
              {
@@ -138,13 +139,14 @@ public class LedgerServiceImpl implements LedgerService
             		            			newEmi.setTotalNoOfEmi(sanction.getLoanTenureInYears()*12);
             		            			newEmi.setRemainingEmi(sanction.getLoanTenureInYears()*12);
             		         			customer.getLedger().add(newEmi);
+            		         			customer.setCustomerStatus(String.valueOf(EnquiryStatus.LEDGER_CREATED));
             		         		
             			                 
             			 }
             		 
             	 }
             	 System.out.println(customer.getLedger());
-            	 
+            	 cr.save(customer);
             	 return customer.getLedger() ;
              }
                

@@ -7,11 +7,11 @@ import in.bitlogic.apnaloan.loan.app.model.Ledger;
 
 public interface LedgerService {
 
-Ledger addLedger(Ledger l);
+public Ledger addLedger(Ledger l);
 
-List<Ledger> getLedger();
+public List<Ledger> getLedger();
 
-Set<Ledger> createLedger(int customerId);
+public List<Ledger> createLedger(int customerId);
 
 
 }

@@ -46,11 +46,12 @@ public ResponseEntity<Ledger> saveLedger(@RequestBody Ledger l)
 		{
 			return new ResponseEntity<List<Ledger>>(ls.getLedger(),HttpStatus.OK);
 		}
-		
+	
+	// Get API for AH to create ledger => http://localhost:9090/generateLedger/{customerId} or eg. /generateLedger/1
         @GetMapping("/generateLedger/{customerId}")
-        public Set<Ledger> genrateLedger(@PathVariable int customerId)
+        public List<Ledger> genrateLedger(@PathVariable int customerId)
         {
-           Set<Ledger> ledgers=	ls.createLedger(customerId);
+        	List<Ledger> ledgers=	ls.createLedger(customerId);
         	
         	
         	return ledgers;
