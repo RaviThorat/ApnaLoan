@@ -57,10 +57,17 @@ public class CustomerServiceImpl implements CustomerService{
 		c.setCustomerStatus(String.valueOf(EnquiryStatus.File_PENDING));
 		cv.setVerificationDate(new Date());
 		cv.setStatus(String.valueOf(EnquiryStatus.Customer_VERIFIED));
+		cv.setRemarks("NA");	
 		
 		c.setCustomerverification(cv);
 		
 		return cr.save(c);
+	}
+
+	@Override
+	public List<Customer> getCreatedCustomers(String customerStatus) {
+		
+		return cr.findAllByCustomerStatus(customerStatus);
 	}
 
 }

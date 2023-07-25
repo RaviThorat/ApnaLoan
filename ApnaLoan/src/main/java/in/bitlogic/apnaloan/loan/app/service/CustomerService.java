@@ -14,4 +14,6 @@ public interface CustomerService {
 	public Customer getCustomer(int cid);
 
 	public Customer customerDocVerification( CustomerVerification cv, int cid);
+
+	public List<Customer> getCreatedCustomers(String customerStatus);
 }

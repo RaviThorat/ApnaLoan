@@ -224,6 +224,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterService {
 
 		headCell.setPhrase(new Phrase("Rate Of Interest(%)", headCellFont));
 		table.addCell(headCell);
+		    System.out.println(String.valueOf(customer.getSanctionletter().getRateOfInterest()));
 		headCell.setPhrase(new Phrase(String.valueOf(customer.getSanctionletter().getRateOfInterest()),headCellFont2));
 		table.addCell(headCell);
 

@@ -39,8 +39,8 @@ public class CustomerController {
 	//Post API for RE => http://localhost:9090/saveCustomer
 	@PostMapping(value = "/saveCustomer", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<Customer> saveCustomer(
-			@RequestParam("addressProof") MultipartFile file1, 
-			@RequestParam("panCard") MultipartFile file2, 
+			@RequestParam(value="addressProof", required = false) MultipartFile file1, 
+			@RequestParam(value="panCard" , required = false) MultipartFile file2, 
 			@RequestParam("IncomeTax") MultipartFile file3,
 			@RequestParam("addharCard") MultipartFile file4,
 			@RequestParam("photo") MultipartFile file5,
@@ -69,6 +69,12 @@ public class CustomerController {
 	@GetMapping("/getCustomers")
 	public ResponseEntity<List<Customer>> getCustomers(){
 		return new ResponseEntity<List<Customer>>(cs.getCustomers(),HttpStatus.OK);
+	}
+	
+	// Get API for OE to getting all created customers => http://localhost:9090/getCreatedCustomers/{customerStatus} eg. Customer_CREATED
+	@GetMapping("getCreatedCustomers/{customerStatus}")
+	public ResponseEntity<List<Customer>> getCreatedCustomers(@PathVariable String customerStatus){
+		return new ResponseEntity<List<Customer>>(cs.getCreatedCustomers(customerStatus),HttpStatus.OK);
 	}
 	
 	// Get API single customer for OE Document Verification => http://localhost:9090/getCustomer/{cid}
