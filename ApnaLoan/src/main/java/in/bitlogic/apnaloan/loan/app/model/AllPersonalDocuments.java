@@ -23,7 +23,7 @@ public class AllPersonalDocuments {
 	@Lob
 	private byte[] panCard;
 	@Lob
-	private byte[] IncomeTax;
+	private byte[] incomeTax;
 	@Lob
 	private byte[] addharCard;
 	@Lob

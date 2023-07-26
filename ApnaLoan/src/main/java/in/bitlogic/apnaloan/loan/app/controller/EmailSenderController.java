@@ -4,6 +4,7 @@ package in.bitlogic.apnaloan.loan.app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import in.bitlogic.apnaloan.loan.app.model.EmailSender;
 import in.bitlogic.apnaloan.loan.app.service.EmailSenderService;
 
+@CrossOrigin("*")
 @RestController
 public class EmailSenderController {
 

@@ -59,7 +59,7 @@ public class Customer {
 	@OneToOne(cascade = CascadeType.ALL)
 	private SanctionLetter sanctionletter;
 	@OneToOne(cascade = CascadeType.ALL)
-	private LoanDisbursement loandisbursement;
+	private LoanDisbursement loandisbursement=new LoanDisbursement();
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Ledger> ledger;
 }

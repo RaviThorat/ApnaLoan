@@ -38,12 +38,12 @@ public class LoanDisbursementServiceImpl implements LoanDisbursementService{
 	
 	
 	@Override
-	public Customer saveLoanDisburse(LoanDisbursement ld, int cid) {
+	public Customer saveLoanDisburse(LoanDisbursement ld,int cid) {
 		
 		Optional<Customer> op=cr.findById(cid);
 				Customer c=op.get();
 				
-				ld.setLoanNo(ld.getAgreementId());
+				ld.setLoanNo(c.getLoandisbursement().getAgreementId());
 				//ld.setModeOfPayment(c.getSanctionletter().getModeOfPayment()); // need to give input by postman
 				ld.setBankName(c.getAccountdetails().getBankName());
 				ld.setBankBranchName(c.getAccountdetails().getBankBranchName());
@@ -54,6 +54,18 @@ public class LoanDisbursementServiceImpl implements LoanDisbursementService{
 				ld.setIfscCode(c.getAccountdetails().getAccountIfscNumber());
 				ld.setAccountType(c.getAccountdetails().getAccounType());
 				ld.setTransferAmount(c.getSanctionletter().getLoanAmtSanctioned());
+				
+//				c.getLoandisbursement().setLoanNo(c.getLoandisbursement().getAgreementId());
+//				//ld.setModeOfPayment(c.getSanctionletter().getModeOfPayment()); // need to give input by postman
+//				c.getLoandisbursement().setBankName(c.getAccountdetails().getBankName());
+//				c.getLoandisbursement().setBankBranchName(c.getAccountdetails().getBankBranchName());
+//				c.getLoandisbursement().setAccountHolderFirstName(c.getSanctionletter().getApplicantFirstName());
+//				c.getLoandisbursement().setAccountHolderMiddleName(c.getSanctionletter().getApplicantMiddleName());
+//				c.getLoandisbursement().setAccountHolderLastName(c.getSanctionletter().getApplicantLastName());
+//				c.getLoandisbursement().setAccountNumber(c.getAccountdetails().getAccountNumber());
+//				c.getLoandisbursement().setIfscCode(c.getAccountdetails().getAccountIfscNumber());
+//				c.getLoandisbursement().setAccountType(c.getAccountdetails().getAccounType());
+//				c.getLoandisbursement().setTransferAmount(c.getSanctionletter().getLoanAmtSanctioned());
 				
 				c.setCustomerStatus(String.valueOf(EnquiryStatus.LOAN_DISBURSED));
 				c.setLoandisbursement(ld);

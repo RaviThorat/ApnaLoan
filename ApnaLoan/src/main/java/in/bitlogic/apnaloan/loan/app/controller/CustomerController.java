@@ -41,7 +41,7 @@ public class CustomerController {
 	public ResponseEntity<Customer> saveCustomer(
 			@RequestParam(value="addressProof", required = false) MultipartFile file1, 
 			@RequestParam(value="panCard" , required = false) MultipartFile file2, 
-			@RequestParam("IncomeTax") MultipartFile file3,
+			@RequestParam("incomeTax") MultipartFile file3,
 			@RequestParam("addharCard") MultipartFile file4,
 			@RequestParam("photo") MultipartFile file5,
 			@RequestParam("signature") MultipartFile file6,

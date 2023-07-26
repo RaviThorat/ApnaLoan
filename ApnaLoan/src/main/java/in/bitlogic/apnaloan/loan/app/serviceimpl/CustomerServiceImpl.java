@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import in.bitlogic.apnaloan.loan.app.enums.EnquiryStatus;
 import in.bitlogic.apnaloan.loan.app.model.Customer;
 import in.bitlogic.apnaloan.loan.app.model.CustomerVerification;
+import in.bitlogic.apnaloan.loan.app.model.LoanDisbursement;
 import in.bitlogic.apnaloan.loan.app.repository.CustomerRepository;
 import in.bitlogic.apnaloan.loan.app.service.CustomerService;
 
@@ -23,6 +24,9 @@ public class CustomerServiceImpl implements CustomerService{
 	
 	@Override
 	public Customer saveCustomer(Customer c) {
+		
+		LoanDisbursement ld=new LoanDisbursement();
+		c.setLoandisbursement(ld);
 		
 		if(c.getCbscore().getCibilScore() >= 681) {
 			c.setCustomerStatus(String.valueOf(EnquiryStatus.Customer_CREATED));
